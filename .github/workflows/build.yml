@@ -1,0 +1,52 @@
+name: "Build"
+on:
+  push:
+    branches:
+      - '*'
+  release:
+    types: [ created ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      URL : ${{ secrets.URL }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+        check-latest: true
+    - run: npm install
+    - run: node index.js
+    - name: Get release
+      if: "contains(github.ref, 'refs/tags/')"
+      id: get_release
+      uses: bruceadams/get-release@v1.2.1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: Upload Release Asset
+      if: "contains(github.ref, 'refs/tags/')"
+      id: upload-release-asset0
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./sol-11_4-vbox.zip
+        asset_name: sol-11_4-vbox.zip
+        asset_content_type: application/zip
+    - name: Upload Release Asset
+      if: "contains(github.ref, 'refs/tags/')"
+      id: upload-release-asset1
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./sol-11_4-vbox.z01
+        asset_name: sol-11_4-vbox.z01
+        asset_content_type: application/zip
+
+
