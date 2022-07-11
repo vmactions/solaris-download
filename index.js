@@ -23,9 +23,9 @@ async function run() {
 
     await io.mv(img, "./" + imgName);
 
-    core.info("Split file");
-    await exec.exec("zip -0 -s 2000m sol-11_4-vbox.ova.zip sol-11_4-vbox.ova");
-    await exec.exec("ls -lah");
+    //core.info("Split file");
+    //await exec.exec("zip -0 -s 2000m sol-11_4-vbox.ova.zip sol-11_4-vbox.ova");
+    //await exec.exec("ls -lah");
 
   } catch (error) {
     core.setFailed(error.message);
