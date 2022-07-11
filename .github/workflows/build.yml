@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-          wget "${{ secrets.URL }}"
+          wget -O sol-11_4-text-x86.iso "${{ secrets.URL }}"
     - name: Get release
       if: "contains(github.ref, 'refs/tags/')"
       id: get_release
