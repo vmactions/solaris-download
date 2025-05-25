@@ -18,9 +18,9 @@ jobs:
           wget -O solaris.iso.zip "${{ secrets.URL }}"
           unzip solaris.iso.zip
     - name: Release
-        uses: softprops/action-gh-release@v2
-        if: github.ref_type == 'tag'
-        with:
+      uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
           files: sol-11_4_81_193_1-text-x86.iso
 
 
